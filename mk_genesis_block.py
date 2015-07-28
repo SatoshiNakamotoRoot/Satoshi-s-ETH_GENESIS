@@ -276,4 +276,4 @@ def evaluate():
     return g
 
 if __name__ == '__main__':
-    print json.dumps(evaluate(), indent=4)
+    print(json.dumps(evaluate(), indent=4))
