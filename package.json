@@ -1,0 +1,8 @@
+{
+  "name": "genesis_block_generator",
+  "description": "Ethereum testnet block 1028201 hash",
+  "main": "get_hash.js",
+  "dependencies": {
+    "augur.js": "^0.8.16"
+  }
+}

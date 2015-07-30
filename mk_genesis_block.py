@@ -118,13 +118,21 @@ else:
     _get_block_timestamp = b.get_block_timestamp
 
 
+def decode_hex(h):
+    return (h[2:] if h[:2] == '0x' else h).decode("hex")
+
 # Grab the extra data command line argument
 if '--extradata' in sys.argv:
     d = (sys.argv+[None])[sys.argv.index('--extradata') + 1]
-    EXTRADATA = (d[2:] if d[:2] == '0x' else d).decode('hex')
+    EXTRADATA = decode_hex(d)
 else:
+    from subprocess import check_output, CalledProcessError
     EXTRADATA = ''
-
+    try:
+        blockhash = check_output(["node", "get_hash.js"]).strip()
+        if blockhash: EXTRADATA = decode_hex(blockhash)
+    except CalledProcessError:
+        sys.stderr.write("Couldn't run get_hash.js. Did you npm install?\n")
 
 # Cache methods that get networking data. Important since this script takes
 # a very long time, and will almost certainly be interrupted multiple times
