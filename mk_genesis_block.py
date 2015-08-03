@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from __future__ import print_function
 import json, re
 import random
 import sys
@@ -121,9 +122,9 @@ else:
 # Grab the extra data command line argument
 if '--extradata' in sys.argv:
     d = (sys.argv+[None])[sys.argv.index('--extradata') + 1]
-    EXTRADATA = (d[2:] if d[:2] == '0x' else d).decode('hex')
+    EXTRADATA = (d[2:] if d[:2] == '0x' else d)
 else:
-    EXTRADATA = ''
+    EXTRADATA = '00'
 
 
 # Cache methods that get networking data. Important since this script takes
@@ -269,7 +270,7 @@ def mk_genesis_block(balances):
         "timestamp": "0x00",
         "difficulty": "0x400000000",
         "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "extraData": "0x"+EXTRADATA.encode('hex'),
+        "extraData": "0x"+EXTRADATA,
         "gasLimit": "0x1388",
         "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "coinbase": "0x0000000000000000000000000000000000000000",
@@ -290,4 +291,4 @@ def evaluate():
     return g
 
 if __name__ == '__main__':
-    print json.dumps(evaluate(), indent=4)
+    print(json.dumps(evaluate(), indent=4))
